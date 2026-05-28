@@ -1,6 +1,11 @@
 EmulationStation
 ================
 
+cd ~/batocera-43
+make x86_64-shell
+make -C /build/buildroot O=/x86_64 batocera-emulationstation-dirclean
+make -C /build/buildroot O=/x86_64 batocera-emulationstation
+
 EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
 
 Building
