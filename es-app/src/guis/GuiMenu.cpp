@@ -271,16 +271,7 @@ void GuiMenu::addVersionInfo()
 
 	std::string label;
 
-	if (!ApiSystem::getInstance()->getVersion().empty())
-	{
-		if (ApiSystem::getInstance()->getApplicationName() == "LZRetroGames-2026")
-			label = "LZRetroGames-2026" + ApiSystem::getInstance()->getVersion() + buildDate;
-		else
-		{
-			std::string aboutInfo = ApiSystem::getInstance()->getApplicationName() + " V" + ApiSystem::getInstance()->getVersion();
-			label = aboutInfo + buildDate;
-		}		
-	}
+	
 		
 	if (!label.empty())
 	{
