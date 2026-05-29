@@ -128,7 +128,7 @@
 #define fake_gettext_resolution_max_1K  _("maximum 1920x1080")
 #define fake_gettext_resolution_max_640 _("maximum 640x480")
 
-GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(window, _("LZ Retro PC MENU (Jul-2026)").c_str())
+GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(window, _("MAIN MENU").c_str())
 {
 	// MAIN MENU
 	bool isFullUI = !UIModeController::getInstance()->isUIModeKid() && !UIModeController::getInstance()->isUIModeKiosk();
@@ -271,7 +271,16 @@ void GuiMenu::addVersionInfo()
 
 	std::string label;
 
-	
+	if (!ApiSystem::getInstance()->getVersion().empty())
+	{
+		if (ApiSystem::getInstance()->getApplicationName() == "BATOCERA")
+			label = "LZ-RetroGames/2026/JUL" + ApiSystem::getInstance()->getVersion() + buildDate;
+		else
+		{
+			std::string aboutInfo = ApiSystem::getInstance()->getApplicationName() + " V" + ApiSystem::getInstance()->getVersion();
+			label = aboutInfo + buildDate;
+		}		
+	}
 		
 	if (!label.empty())
 	{
@@ -1928,52 +1937,49 @@ void GuiMenu::openSystemSettings()
 		led_enabled_switch->setState(isEnabled);
 		s->addWithLabel(_("ENABLE LED"), led_enabled_switch);
 		
-		// Only display RGB color sliders if the hardware is NOT monochrome
-		if (!ApiSystem::getInstance()->isLEDMonochrome()) {
-			std::string colourString = SystemConf::getInstance()->get("led.colour");
-			if (colourString.empty())
-				colourString = "255 0 165";
+		std::string colourString = SystemConf::getInstance()->get("led.colour");
+		if (colourString.empty())
+			colourString = "255 0 165";
 
-			std::stringstream ss(colourString);
-			ss >> red >> green >> blue; 
+		std::stringstream ss(colourString);
+		ss >> red >> green >> blue; 
 
-			auto redLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
-			auto greenLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
-			auto blueLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
+		auto redLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
+		auto greenLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
+		auto blueLEDComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 255.f, 1.f);
 
-			redLEDComponent->setValue(red);
-			redLEDComponent->setOnValueChanged([greenLEDComponent, blueLEDComponent](const float &newVal) {
-				int redInt = static_cast<int>(newVal);
-				int greenInt = static_cast<int>(greenLEDComponent->getValue());
-				int blueInt = static_cast<int>(blueLEDComponent->getValue());
-				ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
-				std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
-				SystemConf::getInstance()->set("led.colour", colourString);
-			});
-			s->addWithLabel(_("RED"), redLEDComponent);
+		redLEDComponent->setValue(red);
+		redLEDComponent->setOnValueChanged([greenLEDComponent, blueLEDComponent](const float &newVal) {
+			int redInt = static_cast<int>(newVal);
+			int greenInt = static_cast<int>(greenLEDComponent->getValue());
+			int blueInt = static_cast<int>(blueLEDComponent->getValue());
+			ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
+			std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
+			SystemConf::getInstance()->set("led.colour", colourString);
+		});
+		s->addWithLabel(_("RED"), redLEDComponent);
 
-			greenLEDComponent->setValue(green);
-			greenLEDComponent->setOnValueChanged([redLEDComponent, blueLEDComponent](const float &newVal) {
-				int redInt = static_cast<int>(redLEDComponent->getValue());
-				int greenInt = static_cast<int>(newVal);
-				int blueInt = static_cast<int>(blueLEDComponent->getValue());
-				ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
-				std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
-				SystemConf::getInstance()->set("led.colour", colourString);
-			});
-			s->addWithLabel(_("GREEN"), greenLEDComponent);
+		greenLEDComponent->setValue(green);
+		greenLEDComponent->setOnValueChanged([redLEDComponent, blueLEDComponent](const float &newVal) {
+			int redInt = static_cast<int>(redLEDComponent->getValue());
+			int greenInt = static_cast<int>(newVal);
+			int blueInt = static_cast<int>(blueLEDComponent->getValue());
+			ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
+			std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
+			SystemConf::getInstance()->set("led.colour", colourString);
+		});
+		s->addWithLabel(_("GREEN"), greenLEDComponent);
 
-			blueLEDComponent->setValue(blue);
-			blueLEDComponent->setOnValueChanged([redLEDComponent, greenLEDComponent](const float &newVal) {
-				int redInt = static_cast<int>(redLEDComponent->getValue());
-				int greenInt = static_cast<int>(greenLEDComponent->getValue());
-				int blueInt = static_cast<int>(newVal);
-				ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
-				std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
-				SystemConf::getInstance()->set("led.colour", colourString);
-			});
-			s->addWithLabel(_("BLUE"), blueLEDComponent);
-		}
+		blueLEDComponent->setValue(blue);
+		blueLEDComponent->setOnValueChanged([redLEDComponent, greenLEDComponent](const float &newVal) {
+			int redInt = static_cast<int>(redLEDComponent->getValue());
+			int greenInt = static_cast<int>(greenLEDComponent->getValue());
+			int blueInt = static_cast<int>(newVal);
+			ApiSystem::getInstance()->setLEDColours(redInt, greenInt, blueInt);
+			std::string colourString = std::to_string(redInt) + " " + std::to_string(greenInt) + " " + std::to_string(blueInt);
+			SystemConf::getInstance()->set("led.colour", colourString);
+		});
+		s->addWithLabel(_("BLUE"), blueLEDComponent);
 
 		s->addSaveFunc([led_enabled_switch] {
 			bool state = led_enabled_switch->getState();
@@ -1984,9 +1990,9 @@ void GuiMenu::openSystemSettings()
 
 	}
 	
-	// LED brightness - Only display if the hardware is NOT monochrome
+	// LED brightness
 	int ledBrightness;
-	if (!ApiSystem::getInstance()->isLEDMonochrome() && ApiSystem::getInstance()->getLEDBrightness(ledBrightness)) {
+	if (ApiSystem::getInstance()->getLEDBrightness(ledBrightness)) {
 		auto ledBrightnessComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
 		ledBrightnessComponent->setValue(ledBrightness);
 		ledBrightnessComponent->setOnValueChanged([](const float &newVal)
