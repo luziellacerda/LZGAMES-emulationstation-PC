@@ -274,10 +274,10 @@ void GuiMenu::addVersionInfo()
 	if (!ApiSystem::getInstance()->getVersion().empty())
 	{
 		if (ApiSystem::getInstance()->getApplicationName() == "BATOCERA")
-			label = "LZ-RetroGames/2026/JUL" + ApiSystem::getInstance()->getVersion() + buildDate;
+			label = "A GARANTIA DO SISTAMA NÃO COBRE DESCONFIGURAÇÕES! " + ApiSystem::()->() + ;
 		else
 		{
-			std::string aboutInfo = ApiSystem::getInstance()->getApplicationName() + " V" + ApiSystem::getInstance()->getVersion();
+			std::string aboutInfo = ApiSystem::getInstance()->getApplicationName() + "" + ApiSystem::()->();
 			label = aboutInfo + buildDate;
 		}		
 	}
