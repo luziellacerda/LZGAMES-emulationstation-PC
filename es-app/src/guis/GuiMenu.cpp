@@ -87,7 +87,7 @@
 #define fake_gettext_system       _("System")
 #define fake_gettext_architecture _("Architecture")
 #define fake_gettext_diskformat   _("Disk format")
-#define fake_gettext_temperature  _("Temperature")
+#define fake_gettext_temperature  _("Temperature")	
 #define fake_gettext_avail_memory _("Available memory")
 #define fake_gettext_battery      _("Battery")
 #define fake_gettext_model        _("Model")
@@ -208,7 +208,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BATOCERASTORE) || ApiSystem::getInstance()->isScriptingSupported(ApiSystem::THEMESDOWNLOADER) ||
 			(ApiSystem::getInstance()->isScriptingSupported(ApiSystem::THEBEZELPROJECT) && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::DECORATIONS)) ||
 			ApiSystem::getInstance()->isScriptingSupported(ApiSystem::UPGRADE))
-			addEntry(_("UPDATES & DOWNLOADS"), true, [this] { openUpdatesSettings(); }, "iconUpdates");
+			// addEntry(_("UPDATES & DOWNLOADS"), true, [this] { openUpdatesSettings(); }, "iconUpdates");
 
 		addEntry(_("LZ RETRO SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings(); }, "iconSystem");
 	}
@@ -1176,10 +1176,10 @@ void GuiMenu::openUpdatesSettings()
 
 	if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::UPGRADE))
 	{
-		updateGui->addGroup(_("SOFTWARE UPDATES"));
+		// updateGui->addGroup(_("SOFTWARE UPDATES"));
 
 		// Enable updates
-		updateGui->addSwitch(_("CHECK FOR UPDATES"), "updates.enabled", false);
+	//	updateGui->addSwitch(_("CHECK FOR UPDATES"), "updates.enabled", false);
 
 		auto updatesTypeList = std::make_shared<OptionListComponent<std::string> >(mWindow, _("UPDATE TYPE"), false);
 
