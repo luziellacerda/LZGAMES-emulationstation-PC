@@ -205,12 +205,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 
 		addEntry(_("SCRAPER").c_str(), true, [this] { openScraperSettings(); }, "iconScraper");		
 
-		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BATOCERASTORE) || ApiSystem::getInstance()->isScriptingSupported(ApiSystem::THEMESDOWNLOADER) ||
-			(ApiSystem::getInstance()->isScriptingSupported(ApiSystem::THEBEZELPROJECT) && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::DECORATIONS)) ||
-			ApiSystem::getInstance()->isScriptingSupported(ApiSystem::UPGRADE))
-			// addEntry(_("UPDATES & DOWNLOADS"), true, [this] { openUpdatesSettings(); }, "iconUpdates");
-
-		addEntry(_("LZ RETRO SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings(); }, "iconSystem");
+			addEntry(_("LZ RETRO SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings(); }, "iconSystem");
 	}
 	else
 	{
