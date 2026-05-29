@@ -274,7 +274,7 @@ void GuiMenu::addVersionInfo()
 	if (!ApiSystem::getInstance()->getVersion().empty())
 	{
 		if (ApiSystem::getInstance()->getApplicationName() == "BATOCERA")
-			label = "A GARANTIA DO SISTAMA NÃO COBRE DESCONFIGURAÇÕES! " + ApiSystem::()->() + ;
+			label = "A GARANTIA DO SISTAMA NÃO COBRE DESCONFIGURAÇÕES OU RECONFIGURAÇÕES! " + ApiSystem::()->() + ;
 		else
 		{
 			std::string aboutInfo = ApiSystem::getInstance()->getApplicationName() + "" + ApiSystem::()->();
