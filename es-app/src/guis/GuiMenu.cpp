@@ -168,9 +168,9 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 	if (isFullUI)
 	{
 #if BATOCERA
-		addEntry(_("GAME SETTINGS").c_str(), true, [this] { openGamesSettings(); }, "iconGames");
+		addEntry(_("LZ RETRO SETTINGS").c_str(), true, [this] { openGamesSettings(); }, "iconGames");
 		addEntry(GuiControllersSettings::getControllersSettingsLabel(), true, [window] { GuiControllersSettings::openControllersSettings(window); }, "iconControllers");
-		addEntry(_("USER INTERFACE SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
+		addEntry(_("LZ RETRO INTERFACE SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
 		addEntry(_("GAME COLLECTION SETTINGS").c_str(), true, [this] { openCollectionSystemSettings(); }, "iconAdvanced");
 		addEntry(_("SOUND SETTINGS").c_str(), true, [this] { openSoundSettings(); }, "iconSound");
 
@@ -178,9 +178,9 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 			addEntry(_("NETWORK SETTINGS").c_str(), true, [this] { openNetworkSettings(); }, "iconNetwork");
 #else
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))
-			addEntry(_("GAME SETTINGS").c_str(), true, [this] { openGamesSettings(); }, "iconGames");
+			addEntry(_("LZ RETRO SETTINGS").c_str(), true, [this] { openGamesSettings(); }, "iconGames");
 
-		addEntry(_("USER INTERFACE SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
+		addEntry(_("LZ RETRO INTERFACE SETTINGS").c_str(), true, [this] { openUISettings(); }, "iconUI");
 
 		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::GAMESETTINGS))		
 			addEntry(GuiControllersSettings::getControllersSettingsLabel(), true, [window] { GuiControllersSettings::openControllersSettings(window); }, "iconControllers");
@@ -210,7 +210,7 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 			ApiSystem::getInstance()->isScriptingSupported(ApiSystem::UPGRADE))
 			addEntry(_("UPDATES & DOWNLOADS"), true, [this] { openUpdatesSettings(); }, "iconUpdates");
 
-		addEntry(_("SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings(); }, "iconSystem");
+		addEntry(_("LZ RETRO SYSTEM SETTINGS").c_str(), true, [this] { openSystemSettings(); }, "iconSystem");
 	}
 	else
 	{
@@ -219,9 +219,9 @@ GuiMenu::GuiMenu(Window *window, bool animate) : GuiComponent(window), mMenu(win
 	}
 
 #ifdef WIN32
-	addEntry(_("QUIT"), !Settings::getInstance()->getBool("ShowOnlyExit") || !Settings::getInstance()->getBool("ShowExit"), [this] { openQuitMenu(); }, "iconQuit");
+	addEntry(_("DESLIGA LZ RETRO"), !Settings::getInstance()->getBool("ShowOnlyExit") || !Settings::getInstance()->getBool("ShowExit"), [this] { openQuitMenu(); }, "iconQuit");
 #else
-	addEntry(_("QUIT").c_str(), true, [this] { openQuitMenu(); }, "iconQuit");
+	addEntry(_("DESLIGA LZ RETRO").c_str(), true, [this] { openQuitMenu(); }, "iconQuit");
 #endif
 	
 	addChild(&mMenu);
@@ -3928,7 +3928,7 @@ void GuiMenu::openUISettings()
 		//for (auto it = themeSets.begin(); it != themeSets.end(); it++)
 		//	theme_set->add(it->first, it->first, it == selectedSet);
 
-		s->addWithLabel(_("THEME SET"), theme_set);
+		// REMOVI TROCAR DE TEMA s->addWithLabel(_("THEME SET"), theme_set);
 		s->addSaveFunc([s, theme_set, pthis, window, system]
 		{
 			std::string oldTheme = Settings::getInstance()->getString("ThemeSet");
